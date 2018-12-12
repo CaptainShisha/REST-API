@@ -11,6 +11,10 @@ export class UsersService {
   getAll(): UserDTO[] {
     return this.users;
   }
+  getByUsername(username: string): boolean {
+    const usernames: string [] = this.users.map(x => x.username);
+    return usernames.indexOf(username) >= 0;
+  }
 
   add(user: UserDTO): void {
     const usernames: string [] = this.users.map(x => x.username);
@@ -19,5 +23,11 @@ export class UsersService {
     }
     user.role = 'user';
     this.users.push(user);
+  }
+
+  isLoggedIn(user: any) {
+    return !!this.users.find(
+      x =>
+        x.username === user.username && x.password === user.password);
   }
 }
