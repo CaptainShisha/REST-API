@@ -2,6 +2,7 @@ import { UsersService } from './../users/user.service';
 import { JwtPayload } from './interfaces/jwt-payload';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserDTO } from 'src/models/user.DTO';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,8 @@ export class AuthService {
     return await this.jwtService.sign(payload);
   }
 
-  async validateUser(payload: JwtPayload) {
-    return !!this.usersService.getByUsername(payload.username);
+ validateUser(payload: JwtPayload): UserDTO {
+    return this.usersService.validateUser(payload);
   }
+
 }
