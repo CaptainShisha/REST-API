@@ -4,6 +4,7 @@ import { ExtractJwt } from 'passport-jwt';
 import { JwtPayload } from './interfaces/jwt-payload';
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UserDTO } from 'src/models/user.DTO';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -13,8 +14,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: 'iamhungry',
     });
   }
-  async validate(payload: JwtPayload) {
-    const user = await this.authService.validateUser(payload);
+  validate(payload: JwtPayload): UserDTO {
+    const user = this.authService.validateUser(payload);
 
     return user;
   }

@@ -1,17 +1,20 @@
 import { UserValidationPipe } from './../pipes/user.validationPipe';
 import { UserDTO } from './../models/user.DTO';
-import { Get, Controller, Render, HttpCode, Req, Body, Post, Optional, UseGuards, Inject, UsePipes } from '@nestjs/common';
+import { Get, Controller, Body, Post, UseGuards, Inject, UsePipes, ReflectMetadata } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { AuthGuard, PassportModule } from '@nestjs/passport';
+import bodyParser = require('body-parser');
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   // Add admin validation
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard(), RolesGuard)
   @Get('')
-  getAll(): UserDTO[] {
+  getAll(@Body() body): UserDTO[] {
+
       return this.usersService.getAll();
   }
 

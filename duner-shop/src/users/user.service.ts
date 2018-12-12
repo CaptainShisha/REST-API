@@ -1,3 +1,4 @@
+import { JwtPayload } from './../auth/interfaces/jwt-payload';
 import { UserDTO } from './../models/user.DTO';
 import { Injectable, HttpException, HttpCode, HttpStatus } from '@nestjs/common';
 
@@ -6,16 +7,22 @@ export class UsersService {
 
   private users: UserDTO[] = [
     { username: 'maria', password: 'ninjacode', role: 'admin' },
+    { username: 'pesho', password: '12345', role: 'user' },
   ];
 
   getAll(): UserDTO[] {
     return this.users;
   }
-  getByUsername(username: string): boolean {
+  validateExistance(username: string): boolean {
     const usernames: string [] = this.users.map(x => x.username);
     return usernames.indexOf(username) >= 0;
   }
 
+    getByUsername(username: string): UserDTO {
+    const usernames: string [] = this.users.map(x => x.username);
+    const userindex = usernames.indexOf(username);
+    return this.users[userindex];
+  }
   add(user: UserDTO): void {
     const usernames: string [] = this.users.map(x => x.username);
     if (usernames.indexOf(user.username) > 0) {
@@ -24,7 +31,10 @@ export class UsersService {
     user.role = 'user';
     this.users.push(user);
   }
-
+ validateUser(payload: JwtPayload): UserDTO {
+    const userFound: UserDTO = this.getByUsername(payload.username);
+    return userFound;
+  }
   isLoggedIn(user: any) {
     return !!this.users.find(
       x =>

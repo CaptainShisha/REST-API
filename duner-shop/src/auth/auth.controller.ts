@@ -11,9 +11,9 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() user) {
-    //console.log(this.usersService.getAll());
+    // console.log(this.usersService.getAll());
     if (this.usersService.isLoggedIn(user)) {
-        return await this.authService.sign({ username: user.username });
+      return await this.authService.sign({ username: user.username });
     }
     else {
       return 'No such user!';
