@@ -1,3 +1,4 @@
+import { ConfigService } from 'src/config/config.service';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
 import { ExtractJwt } from 'passport-jwt';
@@ -8,10 +9,11 @@ import { UserDTO } from './../models/user.DTO';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly authService: AuthService) {
+  constructor(private readonly authService: AuthService,
+              private readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'iamhungry',
+      secretOrKey: configService.jwtSecret,
     });
   }
   async validate(payload: JwtPayload): Promise<UserDTO> {
