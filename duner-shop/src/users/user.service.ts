@@ -19,13 +19,22 @@ export class UsersService {
   async getAll() {
     return await this.usersRepository.find({});
   }
-/*
-  getByUsername(username: string): UserDTO {
-    const usernames: string [] = this.users.map(x => x.username);
-    const userindex = usernames.indexOf(username);
-    return this.users[userindex];
+
+  async getByUsername(searchUsername: string) {
+    const userFound = await this.usersRepository.findOne({ where: { username: searchUsername } });
+    if (!userFound) {
+      throw new Error('No such user!');
+    }
+    return userFound;
   }
-*/
+  async deleteUser(searchUsername: string) {
+    const userFound = await this.usersRepository.findOne({ where: { username: searchUsername } });
+    if (!userFound) {
+      throw new Error('No such user!');
+    }
+    await this.usersRepository.remove(userFound);
+  }
+
   async registerUser(user: UserRegisterDTO) {
     const userFound = await this.usersRepository.findOne({ where: { username: user.username } });
 
@@ -41,15 +50,14 @@ export class UsersService {
     return result;
   }
   async validateUser(payload: JwtPayload): Promise<UserDTO> {
-    const userFound: any = await this.usersRepository.findOne({ where: { username: payload.username } });
+    const userFound: UserRegisterDTO = await this.usersRepository.findOne({ where: { username: payload.username } });
     return userFound;
   }
 
   async signIn(user: UserDTO): Promise<UserDTO> {
     const userFound: UserDTO = await this.usersRepository.findOne(
-      { select: ['username', 'isAdmin', 'password'],
+      { select: ['username', 'password'],
         where: { username: user.username } });
-    console.log(userFound);
     if (userFound) {
       const result = await bcrypt.compare(user.password, userFound.password);
       if (result) {

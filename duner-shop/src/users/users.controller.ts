@@ -1,7 +1,7 @@
 import { UserRegisterDTO } from './../models/user-register.DTO';
 
 import { UserDTO } from './../models/user.DTO';
-import { Get, Controller, Body, Post, UseGuards, Inject, UsePipes, ReflectMetadata, ValidationPipe, HttpStatus, HttpException } from '@nestjs/common';
+import { Get, Controller, Body, Post, UseGuards, Param, ValidationPipe, HttpStatus, HttpException, Delete } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../guards/roles.guard';
@@ -10,7 +10,6 @@ import { RolesGuard } from '../guards/roles.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  // Add admin validation
   @UseGuards(AuthGuard(), RolesGuard)
   @Get('')
   async getAll(@Body() body): Promise<UserDTO[]> {
@@ -18,7 +17,27 @@ export class UsersController {
       return await this.usersService.getAll();
   }
 
-  @Post('register')
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Get(':username')
+  async getUser(@Param('username') param: string): Promise<UserRegisterDTO> {
+    try {
+    const userFound = await this.usersService.getByUsername(param);
+    return userFound;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Delete (':username')
+  async deleteUser(@Param('username') param: string) {
+    try {
+    const userFound = await this.usersService.deleteUser(param);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Post('')
   async addUser(@Body(new ValidationPipe ({
     transform: true,
     whitelist: true,

@@ -19,6 +19,20 @@ export class User {
     @IsEmail()
     email: string;
 
+    @Column()
+    firstName: string;
+    @Column()
+    lastName: string;
+
+    @Column()
+    streetName: string;
+
+    @Column()
+    streetNumber: string;
+
+    @Column()
+    phoneNumber: string;
+
     @Column({ default: false })
     isAdmin: boolean;
 

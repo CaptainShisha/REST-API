@@ -13,7 +13,7 @@ export class AuthService {
     public async signIn(user: UserDTO): Promise<string> {
       const userFound: UserDTO = await this.usersService.signIn(user);
       if (userFound) {
-        return this.jwtService.sign({ username: userFound.username, isAdmin: userFound.isAdmin });
+        return this.jwtService.sign({ username: userFound.username });
       } else {
         return null;
       }

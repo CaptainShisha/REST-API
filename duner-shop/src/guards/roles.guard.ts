@@ -11,7 +11,6 @@ export class RolesGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    // check in DB instead!!
     const isAdmin = user.isAdmin;
     return user && isAdmin;
   }
