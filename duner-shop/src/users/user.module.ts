@@ -5,9 +5,11 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersService } from './user.service';
 import { UsersController } from './users.controller';
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../entity/User';
 
 @Module({
-  imports: [PassportModule.register({ defaultStrategy: 'jwt' }),
+  imports: [TypeOrmModule.forFeature([User]), PassportModule.register({ defaultStrategy: 'jwt' }),
   JwtModule.register({
     secretOrPrivateKey: 'iamhungry',
     signOptions: {

@@ -1,43 +1,62 @@
 import { JwtPayload } from './../auth/interfaces/jwt-payload';
 import { UserDTO } from './../models/user.DTO';
 import { Injectable, HttpException, HttpCode, HttpStatus } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { User } from './../entity/User';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import * as bcrypt from 'bcrypt';
+import { UserRegisterDTO } from 'src/models/user-register.DTO';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
 
-  private users: UserDTO[] = [
-    { username: 'maria', password: 'ninjacode', role: 'admin' },
-    { username: 'pesho', password: '12345', role: 'user' },
-  ];
+    ) { }
 
-  getAll(): UserDTO[] {
-    return this.users;
+  async getAll() {
+    return await this.usersRepository.find({});
   }
-  validateExistance(username: string): boolean {
-    const usernames: string [] = this.users.map(x => x.username);
-    return usernames.indexOf(username) >= 0;
-  }
-
-    getByUsername(username: string): UserDTO {
+/*
+  getByUsername(username: string): UserDTO {
     const usernames: string [] = this.users.map(x => x.username);
     const userindex = usernames.indexOf(username);
     return this.users[userindex];
   }
-  add(user: UserDTO): void {
-    const usernames: string [] = this.users.map(x => x.username);
-    if (usernames.indexOf(user.username) > 0) {
-        throw new HttpException('User already exists', HttpStatus.CONFLICT);
+*/
+  async registerUser(user: UserRegisterDTO) {
+    const userFound = await this.usersRepository.findOne({ where: { username: user.username } });
+
+    if (userFound) {
+      throw new Error('User already exists');
     }
-    user.role = 'user';
-    this.users.push(user);
+
+    user.password = await bcrypt.hash(user.password, 10);
+    await this.usersRepository.create(user);
+
+    const result = await this.usersRepository.save([user]);
+
+    return result;
   }
- validateUser(payload: JwtPayload): UserDTO {
-    const userFound: UserDTO = this.getByUsername(payload.username);
+  async validateUser(payload: JwtPayload): Promise<UserDTO> {
+    const userFound: any = await this.usersRepository.findOne({ where: { username: payload.username } });
     return userFound;
   }
-  isLoggedIn(user: any) {
-    return !!this.users.find(
-      x =>
-        x.username === user.username && x.password === user.password);
+
+  async signIn(user: UserDTO): Promise<UserDTO> {
+    const userFound: UserDTO = await this.usersRepository.findOne(
+      { select: ['username', 'isAdmin', 'password'],
+        where: { username: user.username } });
+    console.log(userFound);
+    if (userFound) {
+      const result = await bcrypt.compare(user.password, userFound.password);
+      if (result) {
+        return userFound;
+      }
+    }
+
+    return null;
   }
 }

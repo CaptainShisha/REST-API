@@ -8,6 +8,6 @@ export class UserDTO {
   @IsString()
   password: string;
 
-  role?: string;
+  isAdmin?: boolean;
 
 }

@@ -3,7 +3,7 @@ import { MenuService } from './menu.service';
 
 describe('MenuService', () => {
   let service: MenuService;
-  
+
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [MenuService],
