@@ -7,7 +7,4 @@ export class UserDTO {
   @Length(5, 20)
   @IsString()
   password: string;
-
-  isAdmin?: boolean;
-
 }
