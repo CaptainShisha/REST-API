@@ -44,7 +44,7 @@ export class UsersController {
   })) user: UserRegisterDTO): Promise<string> {
     try {
       await this.usersService.registerUser(user);
-      return 'Successful registration!';
+      return JSON.stringify('Successful registration!');
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.CONFLICT);
     }

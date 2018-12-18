@@ -1,0 +1,36 @@
+<h1>Register</h1>
+<form>
+  <div class="form-group">
+    <label for="InputFirstName">First Name</label>
+    <input type="text" class="form-control" id="exampleInputName" placeholder="Please enter your first name" (input)="this.user.firstName=($event.target.value)">
+  </div>
+  <div class="form-group">
+    <label for="InputLastName">Last Name</label>
+    <input type="text" class="form-control" id="exampleInputSurName" placeholder="Please enter your last name" (input)="this.user.lastName=($event.target.value)">
+  </div>
+  <div class="form-group">
+    <label for="InputUserName2">Username</label>
+    <input type="text" class="form-control" id="exampleInputUsername2" placeholder="Username must be 5-20 characters long" (input)="this.user.username=($event.target.value)">
+  </div>
+  <div class="form-group">
+    <label for="InputPassword2">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password must be ?? characters long" (input)="this.user.password=($event.target.value)">
+  </div>
+  <div class="form-group">
+      <label for="InputStreetName">Street Name</label>
+      <input type="text" class="form-control" id="exampleInputStreet" placeholder="Please enter your street name" (input)="this.user.streetName=($event.target.value)">
+  </div>
+  <div class="form-group">
+        <label for="InputStreetNumber">Street Number</label>
+        <input type="text" class="form-control" id="exampleInputStreetNumber" placeholder="Please enter your street number" (input)="this.user.streetNumber=($event.target.value)">
+    </div>
+ <div class="form-group">
+        <label for="InputPhoneNumber">Phone Number</label>
+        <input type="text" class="form-control" id="exampleInputPhoneNumber" placeholder="Please enter a valid phone number" (input)="this.user.phoneNumber=($event.target.value)">
+    </div>    
+  <div class="form-group">
+    <label for="InputEmail">Email</label>
+    <input type="email" class="form-control" id="exampleInputEmail" placeholder="Please enter a valid email" (input)="this.user.email=($event.target.value)">
+  </div>
+  <button type="button" class="btn btn-primary btn-lg btn-block" (click)="this.signUp()">Submit</button>
+</form>
