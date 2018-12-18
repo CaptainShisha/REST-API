@@ -22,7 +22,7 @@ export class AuthController {
       throw new BadRequestException('Wrong credentials!');
     }
 
-    return token;
+    return JSON.stringify(token);
   }
 
   @Get('profile')
