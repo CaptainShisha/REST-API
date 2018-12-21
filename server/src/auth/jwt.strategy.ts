@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
 import { ExtractJwt } from 'passport-jwt';
 import { JwtPayload } from './interfaces/jwt-payload';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserDTO } from './../models/user.DTO';
 
@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: JwtPayload): Promise<UserDTO> {
     const user = await this.authService.validateUser(payload);
     if (!user) {
-      throw new Error('Not authorized');
+      throw new HttpException('Not authorized', HttpStatus.FORBIDDEN);
     }
     return user;
   }
