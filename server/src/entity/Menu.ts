@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import { ProductTypes } from './producttypes';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity({
     name: 'menu',
@@ -14,7 +15,7 @@ export class Menu {
     @Column({ default: 0 })
     product_price: number;
 
-    @Column({ default: 1 })
+    @ManyToOne(type => ProductTypes, product => product.producttype_id)
     product_type: number;
 
     @Column({ default: 0 })

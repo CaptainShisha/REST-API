@@ -17,14 +17,14 @@ export class MenuService {
     async getProductByName(searchProduct: string) {
         const productFound = await this.menuRepository.findOne({ where: { product_name: searchProduct } });
         if (!productFound) {
-            throw new Error('No such user!');
+            throw new Error('No such item!');
         }
         return productFound;
     }
     async deleteProduct(searchProduct: string) {
         const productFound = await this.menuRepository.findOne({ where: { product_name: searchProduct } });
         if (!productFound) {
-            throw new Error('No such user!');
+            throw new Error('No such item!');
         }
         await this.menuRepository.remove(productFound);
     }

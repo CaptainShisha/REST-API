@@ -15,18 +15,3 @@ export class RolesGuard implements CanActivate {
     return user && user.isAdmin;
   }
 }
-
-//const rolesGuard = (role:string) => {
-  //   return class implements CanActivate {
-  
-  //     constructor(private readonly reflector: Reflector){}
-    
-  //     canActivate(context: ExecutionContext): boolean {
-  //       const request = context.switchToHttp().getRequest();
-  //       const {user} = request;
-  //       // const isAdmin = user.isAdmin;
-  //       return user && user[role];// da se opravi
-  //     }
-  //   }
-    
-  // }
