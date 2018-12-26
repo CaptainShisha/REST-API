@@ -23,5 +23,6 @@ import { ConfigService } from '../config/config.service';
 ],
   controllers: [MenuController],
   providers: [MenuService],
+
 })
 export class MenuModule {}

@@ -1,5 +1,6 @@
 import { IsEmail } from 'class-validator';
-import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import { Order } from './Order';
 
 @Entity({
     name: 'users',
@@ -7,6 +8,7 @@ import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 export class User {
 
     @PrimaryGeneratedColumn()
+    @OneToMany(type => Order, order => order.user_id)
     id: number;
 
     @Column({ unique: true })
