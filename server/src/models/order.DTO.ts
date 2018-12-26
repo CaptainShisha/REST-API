@@ -1,6 +1,12 @@
-import { User } from './../entity/User';
-import { Length, IsString, IsNumberString } from 'class-validator';
+import { Length, IsString, IsNumberString, ValidateNested } from 'class-validator';
+import { OrderItemDTO } from './order-item.DTO';
+import { isObject } from 'util';
+import { Type } from 'class-transformer';
 export class OrderDTO {
-@IsNumberString()
+  @IsNumberString()
   user_id: number;
+
+  @ValidateNested()
+  @Type(() => OrderItemDTO)
+  items: OrderItemDTO[];
 }

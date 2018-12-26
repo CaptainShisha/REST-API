@@ -1,5 +1,6 @@
 import { ProductTypes } from './producttypes';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { OrderDetails } from './OrderDetails';
 
 @Entity({
     name: 'menu',
@@ -7,6 +8,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'ty
 export class Menu {
 
     @PrimaryGeneratedColumn()
+    @OneToMany(type => OrderDetails, order => order.product_id)
     product_id: number;
 
     @Column({ unique: true })
