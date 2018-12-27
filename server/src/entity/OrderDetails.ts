@@ -11,10 +11,10 @@ export class OrderDetails {
     @PrimaryGeneratedColumn()
     details_id: number;
 
-    @ManyToOne(type => Order, order => order.order_id)
+    @ManyToOne(type => Order, order => order.order_id, {onDelete: 'CASCADE'} )
     order_id: number;
 
-    @ManyToOne(type => Menu, product => product.product_id, {eager: true})
+    @ManyToOne(type => Menu, product => product.product_id, {eager: true, onDelete: 'SET NULL'})
     product_id: number;
 
     @Column()

@@ -1,3 +1,4 @@
+import { User } from 'src/entity/User';
 import { OrderDetails } from './../entity/OrderDetails';
 import { Menu } from './../entity/Menu';
 import { AuthService } from './../auth/auth.service';
@@ -13,7 +14,7 @@ import { OrdersController } from './orders.controller';
 import { Order } from 'src/entity/Order';
 import { OrdersService } from './orders.service';
 
-@Module({imports: [TypeOrmModule.forFeature([Order, OrderDetails]), PassportModule.register({ defaultStrategy: 'jwt' }),
+@Module({imports: [TypeOrmModule.forFeature([Order, OrderDetails, User, Menu]), PassportModule.register({ defaultStrategy: 'jwt' }),
 JwtModule.registerAsync({
   imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({

@@ -12,7 +12,7 @@ export class Order {
     @OneToMany (type => OrderDetails, details => details.order_id, {eager: true})
     order_id: number;
 
-    @ManyToOne (type => User, user => user.id, {eager: true})
+    @ManyToOne (type => User, user => user.id, {eager: true, onDelete: 'SET NULL'})
     user_id: number;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})

@@ -21,4 +21,6 @@ export class MenuRegisterDTO {
     @Length(2, 20)
     @IsString()
     product_description: string;
+
+    // Add isDeleted column?
 }
