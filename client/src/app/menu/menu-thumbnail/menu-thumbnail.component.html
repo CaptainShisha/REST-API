@@ -1,0 +1,14 @@
+
+<div class="card menuitem" style="width: 15rem;" (click)="this.showmenuInfo()" [class.highlight]="this.isHighlighted">
+  <img class="card-img-top" src="http://localhost:3000/{{ this.item.image_url}}" alt="Card image cap">
+  <div class="card-body">
+    <h3>{{ this.item.product_name }}</h3>
+    <p class="card-text">Price: {{ this.item.product_price }} BGN</p>
+    <app-modal>
+      <div class="title">{{ this.item.product_name }} </div>
+      <div class="body">{{ this.item.product_price }} </div>
+    </app-modal>
+  </div>
+</div>
+
+

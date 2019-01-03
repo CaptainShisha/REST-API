@@ -8,7 +8,7 @@ import { NgModule } from '@angular/core';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'menu', loadChildren: './posts/posts.module#PostsModule' },
+  { path: 'menu', loadChildren: './menu/menu.module#MenuModule' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
