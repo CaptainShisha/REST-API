@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: beige">
+  <a class="navbar-brand" [routerLink]="['/home']">kebab-case-duner-shop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+            <a class="nav-link" [routerLink]="['/menu']" [routerLinkActive]="'active'">Menu</a>
+          </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/about']" [routerLinkActive]="'active'">About</a>
+      </li>
+     
+    </ul>
+    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="'active'">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/register']" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Register</a>
+          </li>
+      </ul>
+  </div>
+</nav>
