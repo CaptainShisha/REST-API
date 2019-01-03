@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,15 +14,18 @@ export class LoginComponent implements OnInit {
 
   token: string;
 
-  constructor(private readonly http: HttpClient) { }
+  error: HttpErrorResponse | string;
+
+  constructor(private readonly http: HttpClient,
+    private readonly router: Router) { }
   login (): any {
     const credentials = {
       'username': this.username,
       'password': this.password
     };
     return this.http.post('http://localhost:3000/login', credentials)
-    .subscribe(res => console.log(res),
-    (err: HttpErrorResponse) => console.log(err.error.message) );
+    .subscribe(res => this.router.navigate (['/menu']),
+    (err: HttpErrorResponse) => this.error = err.error.message);
   }
 
   ngOnInit() {

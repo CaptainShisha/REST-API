@@ -31,4 +31,8 @@ export class MenuThumbnailComponent {
     this.router.navigate(['/menu', this.item]);
     this.modal.close();
   }
+
+    public log(): void {
+    console.log(this.item);
+  }
 }

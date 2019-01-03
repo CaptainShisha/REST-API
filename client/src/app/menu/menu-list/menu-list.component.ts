@@ -20,6 +20,7 @@ export class MenuListComponent implements OnInit {
     this.extractmenuItems(data);
   }
 
+  /*
   public getmenu(search: string): void {
     this.http
       .get(
@@ -27,10 +28,9 @@ export class MenuListComponent implements OnInit {
       )
       .subscribe();
   }
-
+|*/
 
   private extractmenuItems(data: any): void {
-    console.log(data);
     this.menuItems = data;
   }
 }

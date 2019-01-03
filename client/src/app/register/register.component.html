@@ -34,6 +34,7 @@
       <label for="InputEmail">Email</label>
       <input type="email" class="form-control" id="exampleInputEmail" placeholder="Please enter a valid email" (input)="this.user.email=($event.target.value)">
     </div>
-    <button type="button" class="btn btn-primary btn-lg btn-block btn-outline-warning" (click)="this.signUp()" [routerLink]="['/login']">Submit</button>
+    <p class="error">{{this.error}}</p>
+    <button type="button" class="btn btn-primary btn-lg btn-block btn-outline-warning" (click)="this.signUp()">Submit</button>
   </form>
 </div>
