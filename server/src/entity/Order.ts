@@ -1,5 +1,4 @@
-import { Menu } from './Menu';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, OneToMany, AfterInsert } from 'typeorm';
 import { User } from './User';
 import { OrderDetails } from './OrderDetails';
 

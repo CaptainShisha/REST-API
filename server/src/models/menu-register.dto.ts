@@ -19,12 +19,11 @@ export class MenuRegisterDTO {
     @IsNumberString()
     product_weight: number;
 
-    @Length(2, 20)
+    @Length(2, 200)
     @IsString()
     product_description: string;
 
     @Optional()
-    //@IsString()
     image_url: string;
     // Add isDeleted column?
 }

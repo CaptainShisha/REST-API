@@ -14,19 +14,19 @@ export class Menu {
     @Column({ unique: true })
     product_name: string;
 
-    @Column({ default: 0 })
+    @Column()
     product_price: number;
 
     @ManyToOne(type => ProductTypes, product => product.productTypeId)
     product_type: number;
 
-    @Column({ default: 0 })
+    @Column()
     product_weight: number;
 
     @Column()
     product_description: string;
 
-    @Column({ default: 'src\\public\\images\\default.png'})
+    @Column({ default: '\\images\\default.jpg'})
     image_url: string;
 
 }

@@ -8,7 +8,7 @@ export class ProductTypes {
     @OneToMany(type => Menu, menu => menu.product_type)
     productTypeId: number;
 
-    @Column({ default: 'shkembe' })
+    @Column()
     producttype: string;
 
 }

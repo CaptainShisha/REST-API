@@ -2,7 +2,7 @@ import { IsEmail } from 'class-validator';
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
 import { Order } from './Order';
 
-@Entity({
+@Entity({ 
     name: 'users',
   })
 export class User {

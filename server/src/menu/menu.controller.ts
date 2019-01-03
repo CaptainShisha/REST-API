@@ -11,19 +11,19 @@ import {
     ValidationPipe,
     FileInterceptor,
     UseInterceptors,
-    UploadedFile
+    UploadedFile,
 } from '@nestjs/common';
 import {
-    MenuService
+    MenuService,
 } from './menu.service';
 import {
-    MenuRegisterDTO
+    MenuRegisterDTO,
 } from '../models/menu-register.dto';
 import {
-    FileService
+    FileService,
 } from '../core/file.service';
 import {
-    join
+    join,
 } from 'path';
 import { unlink } from 'fs';
 
@@ -35,13 +35,13 @@ export class MenuController {
     @Get()
     async getAllMenuItems(@Body() body): Promise < MenuRegisterDTO[] > {
 
-        return await this.menuService.getAll()
+        return await this.menuService.getAll();
     }
-    //samo za admin da se pushta nqkakwo DTO
+    // samo za admin da se pushta nqkakwo DTO
     @Post()
-    @UseInterceptors(FileInterceptor('avatar', {
+    @UseInterceptors(FileInterceptor('image', {
         limits: FileService.fileLimit(1, 2 * 1024 * 1024),
-        storage: FileService.storage(['src', 'public', 'images']),
+        storage: FileService.storage(['public', 'images']),
         fileFilter: (req, file, cb) => FileService.fileFilter(req, file, cb, '.png', '.jpg'),
     }))
     async addItemToMenu(@Body(new ValidationPipe({
@@ -51,9 +51,9 @@ export class MenuController {
 
                         @UploadedFile() file,
     ): Promise < string > {
-        const folder = join('.', 'src', 'public', 'images');
+        const folder = join('.', 'images');
         if (!file) {
-            product.image_url = join(folder, 'default.png');
+            product.image_url = join(folder, 'default.jpg');
         } else {
             product.image_url = join(folder, file.filename);
         }
@@ -75,10 +75,10 @@ export class MenuController {
         });
 
             return (error.message);
-            //throw new HttpException(error.message, HttpStatus.CONFLICT);
+            // throw new HttpException(error.message, HttpStatus.CONFLICT);
         }
     }
-    //za admina triene na predmet ot meniuto
+    // za admina triene na predmet ot meniuto
     @Delete(':product_name')
     async deleteItemFromMenu(@Param('product_name') param: string): Promise < string > {
         try {
@@ -88,7 +88,7 @@ export class MenuController {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
         }
     }
-    //edit item from menu work in progress
+    // edit item from menu work in progress
     // @Put(':id')
     // async updateItemInMenu(@Param('id') param: number, @Body() body: MenuRegisterDTO): Promise<string> {
     //     try {
@@ -99,7 +99,7 @@ export class MenuController {
     //     }
     // }
 
-    //find item in the menu and show it
+    // find item in the menu and show it
     @Get(':product_name')
     async showMenuItem(@Param('product_name') param: string): Promise < MenuRegisterDTO > {
         try {
