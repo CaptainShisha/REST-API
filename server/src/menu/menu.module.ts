@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
+import { CoreModule } from '../core/core.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Menu]), PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -20,6 +21,7 @@ import { ConfigService } from '../config/config.service';
     }),
     inject: [ConfigService],
   }),
+  CoreModule,
 ],
   controllers: [MenuController],
   providers: [MenuService],

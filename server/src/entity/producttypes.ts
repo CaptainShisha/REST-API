@@ -6,9 +6,9 @@ import { Entity, Column, OneToMany, JoinColumn, PrimaryGeneratedColumn } from 't
 export class ProductTypes {
     @PrimaryGeneratedColumn()
     @OneToMany(type => Menu, menu => menu.product_type)
-    producttype_id: number;
+    productTypeId: number;
 
-    @Column()
+    @Column({ default: 'shkembe' })
     producttype: string;
 
 }

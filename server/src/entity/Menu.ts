@@ -17,7 +17,7 @@ export class Menu {
     @Column({ default: 0 })
     product_price: number;
 
-    @ManyToOne(type => ProductTypes, product => product.producttype_id)
+    @ManyToOne(type => ProductTypes, product => product.productTypeId)
     product_type: number;
 
     @Column({ default: 0 })
@@ -25,5 +25,8 @@ export class Menu {
 
     @Column()
     product_description: string;
+
+    @Column({ default: 'src\\public\\images\\default.png'})
+    image_url: string;
 
 }

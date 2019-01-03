@@ -1,4 +1,5 @@
 import { Length, IsString, IsNumberString } from 'class-validator';
+import { Optional } from '@nestjs/common';
 
 export class MenuRegisterDTO {
 
@@ -22,5 +23,8 @@ export class MenuRegisterDTO {
     @IsString()
     product_description: string;
 
+    @Optional()
+    //@IsString()
+    image_url: string;
     // Add isDeleted column?
 }

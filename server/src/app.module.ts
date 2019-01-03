@@ -1,3 +1,4 @@
+import { CoreModule } from './core/core.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/user.module';
 import { Module } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { OrdersModule } from './orders/orders.module';
     MenuModule,
     AuthModule,
     OrdersModule,
+    CoreModule,
     // DatabaseModule,
   ],
   controllers: [AppController],
