@@ -12,6 +12,7 @@ import {
     FileInterceptor,
     UseInterceptors,
     UploadedFile,
+    UseGuards,
 } from '@nestjs/common';
 import {
     MenuService,
@@ -26,6 +27,8 @@ import {
     join,
 } from 'path';
 import { unlink } from 'fs';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../guards/roles.guard';
 
 @Controller('menu')
 export class MenuController {
@@ -37,7 +40,7 @@ export class MenuController {
 
         return await this.menuService.getAll();
     }
-    // samo za admin da se pushta nqkakwo DTO
+    @UseGuards(AuthGuard(), RolesGuard)
     @Post()
     @UseInterceptors(FileInterceptor('image', {
         limits: FileService.fileLimit(1, 2 * 1024 * 1024),
@@ -74,11 +77,11 @@ export class MenuController {
                 resolve();
         });
 
-            return (error.message);
-            // throw new HttpException(error.message, HttpStatus.CONFLICT);
+            // return (error.message);
+            throw new HttpException(error.message, HttpStatus.CONFLICT);
         }
     }
-    // za admina triene na predmet ot meniuto
+    @UseGuards(AuthGuard(), RolesGuard)
     @Delete(':product_name')
     async deleteItemFromMenu(@Param('product_name') param: string): Promise < string > {
         try {
@@ -88,18 +91,17 @@ export class MenuController {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
         }
     }
-    // edit item from menu work in progress
-    // @Put(':id')
-    // async updateItemInMenu(@Param('id') param: number, @Body() body: MenuRegisterDTO): Promise<string> {
-    //     try {
-    //         const editedProduct = await this.menuService.editProduct(body, param);
-    //         return `${body.product_name} was edited!`;
-    //     } catch (error) {
-    //         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    //     }
-    // }
+    @UseGuards(AuthGuard(), RolesGuard)
+    @Put(':id')
+    async updateItemInMenu(@Param('id') param: number, @Body() body: MenuRegisterDTO): Promise<string> {
+        try {
+            await this.menuService.editProduct(body, param);
+            return `${body.product_name} was edited!`;
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // find item in the menu and show it
     @Get(':product_name')
     async showMenuItem(@Param('product_name') param: string): Promise < MenuRegisterDTO > {
         try {

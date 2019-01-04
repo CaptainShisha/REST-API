@@ -28,5 +28,7 @@ export class Menu {
 
     @Column({ default: '\\images\\default.jpg'})
     image_url: string;
+    @Column({ default: false})
+    is_deleted: boolean;
 
 }

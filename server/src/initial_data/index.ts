@@ -1,5 +1,5 @@
 import { User } from './../entity/User';
-import "reflect-metadata";
+import 'reflect-metadata';
 import { ProductTypes } from './../entity/producttypes';
 import { createConnection } from 'typeorm';
 import { Menu } from './../entity/Menu';
@@ -25,7 +25,7 @@ createConnection().then(async connection => {
     ProductInMenu.product_price = 16;
     ProductInMenu.product_type = 1;
     ProductInMenu.product_weight = 690;
-    ProductInMenu.image_url = 'src\\public\\images\\default.png'
+    ProductInMenu.image_url = 'images\\default.png';
 
     MenuRepository.create(ProductInMenu);
 
@@ -40,6 +40,7 @@ createConnection().then(async connection => {
     UserToAdd.username = 'Golemiq';
     UserToAdd.streetName = 'Pravata';
     UserToAdd.streetNumber = '69';
+    UserToAdd.isAdmin = true;
     const pass = 'golemiq';
     UserToAdd.password = await bcrypt.hash(pass, 10);
 
@@ -49,4 +50,5 @@ createConnection().then(async connection => {
 
     connection.close();
 
+// tslint:disable-next-line:no-console
 }).catch(error => console.log(error));

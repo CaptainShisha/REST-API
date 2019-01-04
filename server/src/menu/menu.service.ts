@@ -11,22 +11,28 @@ export class MenuService {
         private readonly menuRepository: Repository<Menu>) { }
 
     async getAll() {
-        return await this.menuRepository.find({});
+        return await this.menuRepository.find({where: { is_deleted: false}});
     }
 
     async getProductByName(searchProduct: string) {
         const productFound = await this.menuRepository.findOne({ where: { product_name: searchProduct } });
         if (!productFound) {
             throw new Error('No such item!');
+        } else if (productFound.is_deleted === true) {
+            throw new Error('Item has been deleted');
         }
         return productFound;
     }
     async deleteProduct(searchProduct: string) {
         const productFound = await this.menuRepository.findOne({ where: { product_name: searchProduct } });
+
         if (!productFound) {
             throw new Error('No such item!');
+        } else if (productFound.is_deleted === true) {
+            throw new Error('Item has already been deleted');
         }
-        await this.menuRepository.remove(productFound);
+        productFound.is_deleted = true;
+        await this.menuRepository.update(productFound.product_id, productFound);
     }
 
     async addProduct(product: MenuRegisterDTO) {
@@ -42,19 +48,22 @@ export class MenuService {
 
         return result;
     }
-// must find the right method
-    // async editProduct(product: MenuRegisterDTO, idNumber: number) {
+    async editProduct(product: MenuRegisterDTO, idNumber: number) {
 
-    //     const productFound = await this.menuRepository.findOne({ where: { product_id: idNumber } });
+        const productFound = await this.menuRepository.findOne({ where: { product_id: idNumber } });
 
-    //     if (!productFound) {
-    //         throw new Error('There is no such product');
-    //     }
+        if (!productFound) {
+            throw new Error('There is no such product');
+        }
 
-    //     await this.menuRepository.update(productFound, product) //create(product);
+        productFound.product_description = product.product_description;
+        productFound.product_name = product.product_name;
+        productFound.product_price = product.product_price;
+        productFound.product_type = product.product_type;
+        productFound.product_weight = product.product_weight;
 
-    //     const result = await this.menuRepository.save([product]);
+        await this.menuRepository.update(idNumber, productFound);
 
-    //     return result;
-    // }
+        return `${product.product_name} was updated`;
+    }
 }
