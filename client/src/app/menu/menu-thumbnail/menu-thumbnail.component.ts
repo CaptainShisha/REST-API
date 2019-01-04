@@ -1,3 +1,4 @@
+import { CartService } from './../../core/cart.service';
 import {
   Component,
   Input,
@@ -7,6 +8,7 @@ import {
 } from '@angular/core';
 import { МodalComponent } from 'src/app/shared/modal/modal.component';
 import { Router } from '@angular/router';
+import { MenuItemModel } from '../menu-item.model';
 
 @Component({
   selector: 'app-menu-thumbnail',
@@ -14,13 +16,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu-thumbnail.component.css']
 })
 export class MenuThumbnailComponent {
-  @Input() public item: any;
+  @Input() public item: MenuItemModel;
   @Input() public isHighlighted: boolean;
   @Output() public getmenuItem = new EventEmitter<any>();
 
   @ViewChild(МodalComponent) public modal: МodalComponent;
 
-  public constructor(private readonly router: Router) {}
+
+  public constructor(private readonly router: Router,
+    private readonly cart: CartService) {}
 
   public showmenuInfo(): void {
     this.getmenuItem.emit(this.item);
@@ -32,7 +36,7 @@ export class MenuThumbnailComponent {
     this.modal.close();
   }
 
-    public log(): void {
-    console.log(this.item);
+  public addItem(): void {
+    this.cart.addItem(this.item);
   }
 }

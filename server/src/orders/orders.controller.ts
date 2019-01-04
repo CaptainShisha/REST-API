@@ -36,9 +36,10 @@ export class OrdersController {
           const userId = req.user.id;
           try {
             const orderCreated = await this.ordersService.registerOrder(userId, order);
+            return JSON.stringify('Successful order!');
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-          }
+        }
     }
 
     @UseGuards(AuthGuard(), RolesGuard)

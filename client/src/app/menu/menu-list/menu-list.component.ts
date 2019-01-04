@@ -1,3 +1,4 @@
+import { MenuItemModel } from './../menu-item.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -8,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./menu-list.component.css']
 })
 export class MenuListComponent implements OnInit {
-  public menuItems = [];
+  public menuItems: MenuItemModel[] = [];
 
   public constructor(
     private readonly http: HttpClient,

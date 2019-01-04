@@ -62,7 +62,7 @@ export class MenuController {
         }
         try {
             await this.menuService.addProduct(product);
-            return 'Product was added!';
+            return JSON.stringify('Product was added!');
         } catch (error) {
             await new Promise((resolve, reject) => {
 
@@ -76,8 +76,6 @@ export class MenuController {
             }
                 resolve();
         });
-
-            // return (error.message);
             throw new HttpException(error.message, HttpStatus.CONFLICT);
         }
     }

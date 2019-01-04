@@ -1,0 +1,37 @@
+
+<div class ="w-75 mx-auto mb-2">
+    <h1>Add new item</h1>
+    <form>
+      <div class="form-group">
+        <label for="InputProductName">Product name</label>
+        <input type="text" class="form-control" id="exampleInputName" placeholder="Product name must be 2-20 characters long" (input)="this.item.product_name =($event.target.value)">
+      </div>
+      <div class="form-group">
+        <label for="InputPrice">Price</label>
+        <input type="text" class="form-control" id="exampleInputPrice" placeholder="Product price must be 2-4 digits long" (input)="this.item.product_price=($event.target.value)">
+      </div>
+      <div class="form-group">
+          <label for="exampleFormControlSelect1">Category</label>
+          <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.categorySelection" [ngModelOptions]="{standalone: true}" (input)="this.item.product_type=($event.target.value)">
+            <option value="" selected disabled>Please select category</option>
+            <option value='1'>Drinks</option>
+            <option value='2'>Food</option>
+            <option value='3'>Desserts</option>
+          </select>
+      </div>
+      <div class="form-group">
+        <label for="InputWeight">Weight</label>
+        <input type="text" class="form-control" id="exampleInputWeight" placeholder="Product weight must be 1-4 digits long" (input)="this.item.product_weight=($event.target.value)">
+      </div>
+      <div class="form-group">
+          <label for="InputDesc">Description</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Product description must be 2-200 characters long" (input)="this.item.product_description=($event.target.value)"></textarea> 
+      </div>
+      <div class="form-group">
+          <label for="exampleFormControlFile1">Example file input</label>
+          <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+      <p class="error">{{this.error}}</p>
+      <button type="button" class="btn btn-primary btn-lg btn-block btn-outline-warning" (click)="this.add()">Submit</button>
+    </form>
+  </div>

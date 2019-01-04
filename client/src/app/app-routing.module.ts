@@ -1,3 +1,5 @@
+import { CartComponent } from './cart/cart.component';
+import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
@@ -11,6 +13,8 @@ const routes: Routes = [
   { path: 'menu', loadChildren: './menu/menu.module#MenuModule' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'cart', component: CartComponent },
 
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full' }
