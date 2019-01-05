@@ -21,7 +21,6 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.items = JSON.parse(this.storage.getItem('cart')) || [];
-    console.log(this.items);
   }
 
   getTotal(): string {
@@ -31,14 +30,40 @@ export class CartComponent implements OnInit {
     return this.items.map(x => x.product_price)
         .reduce((a, b) => a + b );
     }
-    placeOrder() {
-      const order =  {'items': []};
-      this.items.forEach(item => order.items.push ({'product_id': `${item.product_id}`, 'product_quantity': '1' }));
-      console.log(order);
 
+  emptyCart(): void {
+    this.storage.removeItem('cart');
+    this.items = [];
+  }
+  placeOrder(): void {
+      const orderitems = this.items.map(item => item.product_id);
+      const flattened = [];
+      for (const c of orderitems) {
+        const alreadyCounted = flattened.map(i => i.product_id);
+        if (alreadyCounted.includes(c)) {
+          flattened[alreadyCounted.indexOf(c)].product_quantity += 1;
+        } else {
+          flattened.push({ 'product_id': c, 'product_quantity': 1});
+        }
+      }
+      const replace = (myObj) => {
+        Object.keys(myObj).forEach((key) => {
+          typeof myObj[key] === 'object' ? replace(myObj[key]) : myObj[key] = String(myObj[key]);
+        });
+      };
+      replace(flattened);
+      const order = {'items': [...flattened]};
+      this.postOrder(order);
+    }
+  postOrder(order) {
       this.http.post('http://localhost:3000/orders', order)
-      .subscribe(response => alert(response),
-      (err: HttpErrorResponse) => this.router.navigate(['/login']));
-
+      .subscribe(response => this.completeOrder(),
+      (err: HttpErrorResponse) => {
+        (this.items.length === 0) ? this.error = 'ERROR: Empty cart' : this.router.navigate(['/login']);
+      });
+    }
+  completeOrder(): void {
+      this.emptyCart();
+      this.router.navigate(['home']);
     }
 }

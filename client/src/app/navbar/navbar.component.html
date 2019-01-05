@@ -15,7 +15,8 @@
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" [routerLink]="['/cart']" [routerLinkActive]="'active'">
-            <img class="icon" src="../../assets/Shopping-Basket-Icon.png"></a>
+            <img class="icon" src="../../assets/Shopping-Basket-Icon.png">
+            <span class="badge badge-pill badge-success">{{this.getCartItemsCount()}}</span></a>
           </li>
         <li class="nav-item">
             <a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="'active'">Login</a>
