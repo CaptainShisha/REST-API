@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, OneToMany, AfterInsert } from 'typeorm';
 import { User } from './User';
 import { OrderDetails } from './OrderDetails';
+import { IsOptional } from 'class-validator';
 
 @Entity({
     name: 'orders',
@@ -16,4 +17,7 @@ export class Order {
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     date: string;
+
+    @Column({default: 0})
+    total: number;
 }

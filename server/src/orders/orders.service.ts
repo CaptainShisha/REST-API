@@ -27,9 +27,11 @@ async getAllOrders() {
         });
       }
 async registerOrder(userId: number, order: OrderDTO) {
+    let total = 0;
     const userFound = await this.usersRepository.findOne({ where: { id: userId} });
     const productIds = order.items.map(product => product.product_id);
-    const productsFound = await this.menuRepository.find({ where: { product_id: In ([productIds])} });
+    const productsFound = await this.menuRepository.find({ where: { product_id: In ([productIds])},
+        order: {product_id: 'ASC'} });
     if (!userFound) {
         throw new Error ('User does not exist');
     } else if (productsFound.length !== productIds.length) {
@@ -37,13 +39,18 @@ async registerOrder(userId: number, order: OrderDTO) {
     } else {
         const newOrder = new Order();
         newOrder.user_id = userId;
+        const prices = productsFound.map(i => i.product_price);
         await this.ordersRepository.create(newOrder);
         const result: any = await this.ordersRepository.save(newOrder);
-        order.items.forEach(async orderedItem => {
+        order.items.sort((a, b) => a.product_id - b.product_id);
+        order.items.forEach(async (orderedItem, i) => {
             const orderdetails = {order_id: result.order_id, product_id: orderedItem.product_id, quantity: orderedItem.product_quantity };
+            total += (prices[i] * (+orderedItem.product_quantity));
             await this.detailsRepository.create(orderdetails);
             await this.detailsRepository.save(orderdetails);
         });
+        newOrder.total = total;
+        await this.ordersRepository.update({order_id: newOrder.order_id}, {total});
         return result;
         }
     }
