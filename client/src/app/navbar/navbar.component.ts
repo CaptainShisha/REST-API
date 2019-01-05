@@ -10,8 +10,15 @@ import { StorageService } from '../core/storage.service';
 export class NavbarComponent implements OnInit {
   cartitems = 0;
   constructor(private readonly storage: StorageService) {}
+  isLoggedIn(): boolean {
+    const token = this.storage.getItem('token');
+    return (token ? true : false);
+  }
 
-  getCartItemsCount () {
+  logOut(): void {
+    this.storage.removeItem('token');
+  }
+  getCartItemsCount (): number {
     const cart = JSON.parse(this.storage.getItem('cart'));
     if (cart) {
     this.cartitems = cart.length;
@@ -21,6 +28,6 @@ export class NavbarComponent implements OnInit {
     return this.cartitems;
   }
   ngOnInit() {
-    this.getCartItemsCount ();
+    // this.getCartItemsCount();
   }
 }

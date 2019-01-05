@@ -5,3 +5,7 @@
   height: 1.5em;
   margin-right: 3px;
 }
+
+.logout:hover {
+  cursor: pointer;
+}

@@ -16,6 +16,8 @@ import {
       req: HttpRequest<any>,
       next: HttpHandler
     ): Observable<HttpEvent<any>> {
+console.log(req.url);
+      const re = /menu/gi;
       let modifiedReq: HttpRequest<any> = req;
 
              const token = this.storageService.getItem('token');
@@ -24,7 +26,7 @@ import {
           ? req.clone({
               headers: req.headers
                 .set('Authorization', 'Bearer ' + token)
-                .set('Content-Type', 'application/json')
+                // .set('Content-Type', 'multipart/form-data')
             })
           : req.clone({
               headers: req.headers.set('Content-Type', 'application/json')

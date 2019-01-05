@@ -31,11 +31,12 @@ export class MenuThumbnailComponent {
     this.modal.open();
   }
 
+  /*
   public showmenuDetails(): void {
     this.router.navigate(['/menu', this.item]);
     this.modal.close();
   }
-
+*/
   public addItem(): void {
     this.cart.addItem(this.item);
   }

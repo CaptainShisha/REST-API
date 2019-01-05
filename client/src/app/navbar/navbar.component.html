@@ -18,11 +18,14 @@
             <img class="icon" src="../../assets/Shopping-Basket-Icon.png">
             <span class="badge badge-pill badge-success">{{this.getCartItemsCount()}}</span></a>
           </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!this.isLoggedIn()">
             <a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="'active'">Login</a>
           </li>
-          <li class="nav-item">
+        <li class="nav-item" *ngIf="!this.isLoggedIn()">
             <a class="nav-link" [routerLink]="['/register']" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Register</a>
+          </li>
+        <li class="nav-item logout" *ngIf="this.isLoggedIn()">
+            <a class="nav-link" (click)="this.logOut()">Log out</a>
           </li>
       </ul>
   </div>

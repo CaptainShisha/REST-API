@@ -4,6 +4,7 @@ import { MenuItemModel } from './../menu/menu-item.model';
 import { CartService } from './../core/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { МodalComponent } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'app-cart',
@@ -57,13 +58,14 @@ export class CartComponent implements OnInit {
     }
   postOrder(order) {
       this.http.post('http://localhost:3000/orders', order)
-      .subscribe(response => this.completeOrder(),
+      .subscribe(response => this.completeOrder(response),
       (err: HttpErrorResponse) => {
         (this.items.length === 0) ? this.error = 'ERROR: Empty cart' : this.router.navigate(['/login']);
       });
     }
-  completeOrder(): void {
+  completeOrder(res): void {
       this.emptyCart();
+      alert(res);
       this.router.navigate(['home']);
     }
 }
