@@ -22,15 +22,16 @@ constructor(
     private readonly menuRepository: Repository<Menu>) { }
 
 async getAllOrders() {
-        return await this.ordersRepository.find({order: {
-            order_id: 'DESC' },
+    return await this.ordersRepository.find({order: {
+        order_id: 'DESC' },
         });
-      }
+    }
 async registerOrder(userId: number, order: OrderDTO) {
     let total = 0;
     const userFound = await this.usersRepository.findOne({ where: { id: userId} });
     const productIds = order.items.map(product => product.product_id);
-    const productsFound = await this.menuRepository.find({ where: { product_id: In ([productIds])},
+    const productsFound = await this.menuRepository.find({ where:
+        { product_id: In ([productIds]), is_deleted: false},
         order: {product_id: 'ASC'} });
     if (!userFound) {
         throw new Error ('User does not exist');
@@ -54,21 +55,20 @@ async registerOrder(userId: number, order: OrderDTO) {
         return result;
         }
     }
-    async getOrderById(searchOrder: string) {
-        const orderFound = await this.ordersRepository.findOne({ where: { order_id: searchOrder } });
-        if (!orderFound) {
-          throw new Error('No such order!');
+async getOrderById(searchOrder: string) {
+    const orderFound = await this.ordersRepository.findOne({ where: { order_id: searchOrder } });
+    if (!orderFound) {
+      throw new Error('No such order!');
         }
-        return orderFound;
-      }
-    async deleteOrder(searchOrder: string) {
-        const orderFound = await this.getOrderById(searchOrder);
-        await getConnection()
+    return orderFound;
+    }
+async deleteOrder(searchOrder: string) {
+    const orderFound = await this.getOrderById(searchOrder);
+    await getConnection()
         .createQueryBuilder()
         .delete()
         .from(Order)
         .where('order_id = :id', { id: searchOrder })
         .execute();
-      }
-
+    }
 }

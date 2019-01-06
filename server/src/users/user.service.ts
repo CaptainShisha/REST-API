@@ -33,6 +33,7 @@ export class UsersService {
       throw new Error('No such user!');
     }
     await this.usersRepository.remove(userFound);
+    return (`${searchUsername} profile deleted`);
   }
 
   async registerUser(user: UserRegisterDTO) {

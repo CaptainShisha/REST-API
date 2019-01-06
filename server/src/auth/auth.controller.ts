@@ -36,6 +36,7 @@ export class AuthController {
   async deleteProfile(@Req() req){
     try {
       const userFound = await this.usersService.deleteUser(req.user.username);
+      return userFound;
       } catch (error) {
         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
       }
