@@ -33,6 +33,7 @@ export class MenuService {
         }
         productFound.is_deleted = true;
         await this.menuRepository.update(productFound.product_id, productFound);
+        return;
     }
 
     async addProduct(product: MenuRegisterDTO) {
