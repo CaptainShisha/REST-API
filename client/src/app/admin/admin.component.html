@@ -28,7 +28,7 @@
           <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Product description must be 2-200 characters long" (input)="this.item.product_description=($event.target.value)"></textarea> 
       </div>
       <div class="form-group">
-          <label for="exampleFormControlFile1">Example file input</label>
+          <label for="exampleFormControlFile1">Photo</label>
           <input type="file" (change)="onFileChanged($event)" class="form-control-file" id="exampleFormControlFile1">
         </div>
       <p class="error">{{this.error}}</p>

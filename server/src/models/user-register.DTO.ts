@@ -4,10 +4,9 @@ export class UserRegisterDTO {
   @Length(2, 20)
   @IsString()
   username: string;
-  @Length(5, 20)
+  @Length(6, 20)
   @IsString()
- // Disabled for testing purposes
- // @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}/)
+  @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}/)
   password: string;
 
   @IsString()
